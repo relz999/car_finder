@@ -22,7 +22,7 @@ SWEP.ViewModelFlip = false
 SWEP.ViewModel = Model("models/weapons/v_c4.mdl")
 SWEP.WorldModel = Model("models/weapons/w_c4.mdl")
 SWEP.Spawnable = true
-SWEP.AdminOnly = false
+SWEP.AdminOnly = true
 SWEP.AnimPrefix = "python"
 SWEP.Sound = Sound("weapons/deagle/deagle-1.wav")
 SWEP.Primary.ClipSize = -1
@@ -80,6 +80,7 @@ AppList:AddColumn( "Owner" )
 AppList:AddColumn( "Car" )
 AppList:AddColumn( "Distance" )
 
+
 for k,v in pairs (carList) do
 	Distance = math.Round(v:GetPos():Distance(LocalPlayer():GetPos()) / 100,2)
 	AppList:AddLine( v:CPPIGetOwner():Nick(), v:GetVehicleClass() , Distance.." metres")
@@ -88,7 +89,7 @@ end
 AppList.OnRowSelected = function( lst, index, pnl )
 	
 	net.Start("SetPos")
-	net.WriteEntity(carList[index])
+	net.WriteEntity(carList[index-1])
 	net.SendToServer()
 	-- Debug info on row selection.
 	print( "Selected " .. pnl:GetColumnText( 1 ) .. " ( " .. pnl:GetColumnText( 2 ) .. " ) at index " .. index )
